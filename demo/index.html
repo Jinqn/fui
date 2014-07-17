@@ -4,18 +4,19 @@
     <meta charset="utf-8">
     <title>FUI完整demo</title>
 
-    <link rel="stylesheet" type="text/css" href="../theme/fui.all.css">
+    <link rel="stylesheet" type="text/css" href="../dist/theme/default/fui.css">
     <link rel="stylesheet" type="text/css" href="assets/style/demo.css">
     <script src="../dev-lib/vash.js"></script>
     <script src="../dev-lib/jquery-1.11.1.js"></script>
-    <script src="../dev-lib/dev-define.js"></script>
-    <script>
-        inc.config({
-            base: '../src'
-        });
-    </script>
-    <script src="../dev-lib/exports.js"></script>
-    <script src="../dev-lib/dev-start.js"></script>
+    <!--<script src="../dev-lib/dev-define.js"></script>-->
+    <!--<script>-->
+        <!--inc.config({-->
+            <!--base: '../src'-->
+        <!--});-->
+    <!--</script>-->
+    <!--<script src="../dev-lib/exports.js"></script>-->
+    <!--<script src="../dev-lib/dev-start.js"></script>-->
+    <script src="../dist/fui.all.min.js"></script>
     <script>
         window.onload = function () {
 
@@ -48,7 +49,13 @@
                 fontPanel = new FUI.LabelPanel( {
                     label: '字体',
                     height: 100,
-                    margin: '0 0 5px 0',
+                    margin: 2,
+                    break: true
+                } ),
+                filePanel = new FUI.LabelPanel( {
+                    label: '图片',
+                    height: 100,
+                    margin: 2,
                     break: true
                 } ),
                 stylePanel = new FUI.LabelPanel( {
@@ -69,7 +76,7 @@
                 sep3 = new FUI.Separator( {
                     className: 'ext-sep',
                     height: 90
-                } ),
+                }),
                 sep4 = new FUI.Separator( {
                     className: 'ext-sep',
                     height: 90
@@ -78,6 +85,7 @@
             initUndoRedoWidget( undoRedoPanel );
             initClipboardWidget( clipboardPanel );
             initFontWidget( fontPanel );
+            initFileWidget( filePanel );
             initStyleWidget( stylePanel );
 
             toolbar.appendWidget( sep1 );
@@ -86,6 +94,7 @@
             toolbar.appendWidget( sep2 );
             toolbar.appendWidget( fontPanel );
             toolbar.appendWidget( sep3 );
+            toolbar.appendWidget( filePanel );
             toolbar.appendWidget( stylePanel );
             toolbar.appendWidget( sep4 );
 
@@ -230,7 +239,7 @@
                     selected: 0,
                     input: {
                         button: {
-                            padding: '5px 3px',
+                            padding: '6px 3px',
                             icon: {
                                 width: 10,
                                 height: 10,
@@ -275,7 +284,7 @@
                     selected: 4,
                     input: {
                         button: {
-                            padding: '5px 3px',
+                            padding: '6px 3px',
                             icon: {
                                 width: 10,
                                 height: 10,
@@ -320,6 +329,40 @@
             panel.appendWidget( fontsizePanel );
             panel.appendWidget( biuPanel );
 
+        }
+
+        function initFileWidget ( panel ) {
+
+            var btn = new FUI.Button( {
+                    padding: 5,
+                    label: '图片',
+                    icon: 'assets/icon-demo/img.png',
+                    layout: 'bottom'
+                } ),
+                dialog = new FUI.Dialog( {
+                    width: 600,
+                    height: 400,
+                    caption: '上传图片'
+                } ),
+                btnMenu = new FUI.ButtonMenu( {
+                    text: "编号",
+                    buttons: [ {
+                        className: 'ext-list-btn'
+                    }, {
+                        className: 'ext-open-btn'
+                    } ],
+                    menu: {
+                        items: [ "圆点", "实心点", "方框" ]
+                    }
+                } );
+
+
+            btn.on( "click", function () {
+                dialog.open();
+            } );
+
+            panel.appendWidget( btn );
+            panel.appendWidget( btnMenu );
         }
 
         function initStyleWidget ( panel ) {
